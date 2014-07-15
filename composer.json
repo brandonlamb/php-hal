@@ -1,0 +1,20 @@
+{
+    "name": "brandonlamb/php-hal",
+    "description": "REST HAL library as a C-extension for PHP",
+    "keywords": ["extension"],
+    "require": {
+        "php": "~5.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brandon Lamb",
+            "homepage": "https://gitub.com/brandonlamb"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Prr": "src"
+        }
+    }
+}
