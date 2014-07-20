@@ -14,11 +14,11 @@
 #include "kernel/main.h"
 #include "kernel/memory.h"
 #include "kernel/object.h"
-#include "kernel/operators.h"
-#include "kernel/fcall.h"
 #include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
+#include "kernel/operators.h"
 #include "kernel/hash.h"
+#include "kernel/fcall.h"
 #include "kernel/array.h"
 
 
@@ -31,8 +31,6 @@ ZEPHIR_INIT_CLASS(Phal_Entity) {
 	zend_declare_property_null(phal_entity_ce, SL("title"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	zend_declare_property_null(phal_entity_ce, SL("key"), ZEND_ACC_PROTECTED TSRMLS_CC);
-
-	zend_declare_property_null(phal_entity_ce, SL("relation"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	zend_declare_property_null(phal_entity_ce, SL("uri"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
@@ -59,30 +57,9 @@ ZEPHIR_INIT_CLASS(Phal_Entity) {
  */
 PHP_METHOD(Phal_Entity, __construct) {
 
-	int ZEPHIR_LAST_CALL_STATUS;
-	zval *uri_param = NULL, *_0, *_1, *_2, *_3, *_4;
-	zval *uri = NULL;
+	zval *_0, *_1, *_2, *_3;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 0, 1, &uri_param);
-
-	if (!uri_param) {
-		ZEPHIR_INIT_VAR(uri);
-		ZVAL_EMPTY_STRING(uri);
-	} else {
-	if (unlikely(Z_TYPE_P(uri_param) != IS_STRING && Z_TYPE_P(uri_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'uri' must be a string") TSRMLS_CC);
-		RETURN_MM_NULL();
-	}
-
-	if (unlikely(Z_TYPE_P(uri_param) == IS_STRING)) {
-		uri = uri_param;
-	} else {
-		ZEPHIR_INIT_VAR(uri);
-		ZVAL_EMPTY_STRING(uri);
-	}
-	}
-
 
 	ZEPHIR_INIT_VAR(_0);
 	array_init(_0);
@@ -96,12 +73,6 @@ PHP_METHOD(Phal_Entity, __construct) {
 	ZEPHIR_INIT_VAR(_3);
 	array_init(_3);
 	zephir_update_property_this(this_ptr, SL("data"), _3 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_4);
-	zephir_gettype(_4, uri TSRMLS_CC);
-	if (!ZEPHIR_IS_STRING(_4, "null")) {
-		ZEPHIR_CALL_METHOD(NULL, this_ptr, "seturi", NULL, uri);
-		zephir_check_call_status();
-	}
 	ZEPHIR_MM_RESTORE();
 
 }
@@ -128,14 +99,27 @@ PHP_METHOD(Phal_Entity, getId) {
 
 PHP_METHOD(Phal_Entity, setRepositoryKey) {
 
-	zval *key;
+	zval *key_param = NULL;
+	zval *key = NULL;
 
-	zephir_fetch_params(0, 1, 0, &key);
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &key_param);
 
+	if (unlikely(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (unlikely(Z_TYPE_P(key_param) == IS_STRING)) {
+		key = key_param;
+	} else {
+		ZEPHIR_INIT_VAR(key);
+		ZVAL_EMPTY_STRING(key);
+	}
 
 
 	zephir_update_property_this(this_ptr, SL("key"), key TSRMLS_CC);
-	RETURN_THISW();
+	RETURN_THIS();
 
 }
 
@@ -148,14 +132,27 @@ PHP_METHOD(Phal_Entity, getRepositoryKey) {
 
 PHP_METHOD(Phal_Entity, setTitle) {
 
-	zval *title;
+	zval *title_param = NULL;
+	zval *title = NULL;
 
-	zephir_fetch_params(0, 1, 0, &title);
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &title_param);
 
+	if (unlikely(Z_TYPE_P(title_param) != IS_STRING && Z_TYPE_P(title_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'title' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (unlikely(Z_TYPE_P(title_param) == IS_STRING)) {
+		title = title_param;
+	} else {
+		ZEPHIR_INIT_VAR(title);
+		ZVAL_EMPTY_STRING(title);
+	}
 
 
 	zephir_update_property_this(this_ptr, SL("title"), title TSRMLS_CC);
-	RETURN_THISW();
+	RETURN_THIS();
 
 }
 
@@ -201,14 +198,17 @@ PHP_METHOD(Phal_Entity, getUri) {
 
 PHP_METHOD(Phal_Entity, setData) {
 
-	zval *data;
+	zval *data_param = NULL;
+	zval *data = NULL;
 
-	zephir_fetch_params(0, 1, 0, &data);
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &data_param);
 
+	zephir_get_arrval(data, data_param);
 
 
 	zephir_update_property_this(this_ptr, SL("data"), data TSRMLS_CC);
-	RETURN_THISW();
+	RETURN_THIS();
 
 }
 
@@ -305,7 +305,7 @@ PHP_METHOD(Phal_Entity, setLinks) {
 	) {
 		ZEPHIR_GET_HVALUE(link, _2);
 		if (!(zephir_instance_of_ev(link, phal_link_ce TSRMLS_CC))) {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "Invalid array, must be []Link", "phal/entity.zep", 112);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "Invalid array, must be []Link", "phal/entity.zep", 108);
 			return;
 		}
 	}
@@ -402,7 +402,7 @@ PHP_METHOD(Phal_Entity, throwExceptionIfNotLinkableResouce) {
 	ZEPHIR_CALL_METHOD(&link, entity, "getselflink",  NULL);
 	zephir_check_call_status();
 	if (!(zephir_is_true(link))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "This resource not contains a valid URI", "phal/entity.zep", 148);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "This resource not contains a valid URI", "phal/entity.zep", 144);
 		return;
 	}
 	ZEPHIR_MM_RESTORE();
@@ -547,7 +547,7 @@ PHP_METHOD(Phal_Entity, getLinks) {
 PHP_METHOD(Phal_Entity, addResource) {
 
 	zend_bool multi;
-	zval *rel_param = NULL, *entity, *multi_param = NULL, *key = NULL, *_0;
+	zval *rel_param = NULL, *entity, *multi_param = NULL, *_0, *_1;
 	zval *rel = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -583,22 +583,13 @@ PHP_METHOD(Phal_Entity, addResource) {
 	if (unlikely(!multi)) {
 		zephir_update_property_array(this_ptr, SL("entities"), rel, entity TSRMLS_CC);
 	} else {
-		ZEPHIR_OBS_VAR(key);
 		_0 = zephir_fetch_nproperty_this(this_ptr, SL("entities"), PH_NOISY_CC);
-		if (!(unlikely(zephir_array_isset_fetch(&key, _0, rel, 0 TSRMLS_CC)))) {
-			ZEPHIR_INIT_NVAR(key);
-			array_init_size(key, 2);
-			zephir_array_fast_append(key, entity);
-		} else {
-			if (unlikely(Z_TYPE_P(key) != IS_ARRAY)) {
-				ZEPHIR_INIT_NVAR(key);
-				array_init_size(key, 2);
-				zephir_array_fast_append(key, entity);
-			} else {
-				zephir_array_append(&key, entity, PH_SEPARATE);
-			}
+		if (unlikely(!zephir_array_isset(_0, rel))) {
+			ZEPHIR_INIT_VAR(_1);
+			array_init(_1);
+			zephir_update_property_array(this_ptr, SL("entities"), rel, _1 TSRMLS_CC);
 		}
-		zephir_update_property_array(this_ptr, SL("entities"), rel, key TSRMLS_CC);
+		zephir_update_property_array_multi(this_ptr, SL("entities"), &entity TSRMLS_CC, SL("za"), 1, rel);
 	}
 	RETURN_THIS();
 
@@ -607,10 +598,10 @@ PHP_METHOD(Phal_Entity, addResource) {
 PHP_METHOD(Phal_Entity, addResources) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	HashTable *_2;
-	HashPosition _1;
+	HashTable *_1, *_4;
+	HashPosition _0, _3;
 	zend_bool overwrite;
-	zval *rel_param = NULL, *entities, *overwrite_param = NULL, *entity = NULL, *_0, **_3;
+	zval *rel_param = NULL, *entities, *overwrite_param = NULL, *entity = NULL, **_2, **_5;
 	zval *rel = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -640,16 +631,26 @@ PHP_METHOD(Phal_Entity, addResources) {
 
 
 	if (unlikely(overwrite)) {
-		ZEPHIR_INIT_VAR(_0);
-		array_init(_0);
-		zephir_update_property_array(this_ptr, SL("entities"), rel, _0 TSRMLS_CC);
+		zephir_is_iterable(entities, &_1, &_0, 0, 0);
+		for (
+		  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
+		  ; zephir_hash_move_forward_ex(_1, &_0)
+		) {
+			ZEPHIR_GET_HVALUE(entity, _2);
+			if (!(zephir_instance_of_ev(entity, phal_entity_ce TSRMLS_CC))) {
+				ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "entity must be a \\Phal\\Entity", "phal/entity.zep", 241);
+				return;
+			}
+		}
+		zephir_update_property_array(this_ptr, SL("entities"), rel, entities TSRMLS_CC);
+		RETURN_THIS();
 	}
-	zephir_is_iterable(entities, &_2, &_1, 0, 0);
+	zephir_is_iterable(entities, &_4, &_3, 0, 0);
 	for (
-	  ; zephir_hash_get_current_data_ex(_2, (void**) &_3, &_1) == SUCCESS
-	  ; zephir_hash_move_forward_ex(_2, &_1)
+	  ; zephir_hash_get_current_data_ex(_4, (void**) &_5, &_3) == SUCCESS
+	  ; zephir_hash_move_forward_ex(_4, &_3)
 	) {
-		ZEPHIR_GET_HVALUE(entity, _3);
+		ZEPHIR_GET_HVALUE(entity, _5);
 		ZEPHIR_CALL_METHOD(NULL, this_ptr, "addresource", NULL, rel, entity, ZEPHIR_GLOBAL(global_true));
 		zephir_check_call_status();
 	}

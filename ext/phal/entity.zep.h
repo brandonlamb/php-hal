@@ -39,10 +39,6 @@ PHP_METHOD(Phal_Entity, setFormatWriter);
 PHP_METHOD(Phal_Entity, getFormatWriter);
 PHP_METHOD(Phal_Entity, __toString);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phal_entity___construct, 0, 0, 0)
-	ZEND_ARG_INFO(0, uri)
-ZEND_END_ARG_INFO()
-
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phal_entity_setid, 0, 0, 1)
 	ZEND_ARG_INFO(0, id)
 ZEND_END_ARG_INFO()
@@ -137,7 +133,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_phal_entity_setformatwriter, 0, 0, 1)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(phal_entity_method_entry) {
-	PHP_ME(Phal_Entity, __construct, arginfo_phal_entity___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
+	PHP_ME(Phal_Entity, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
 	PHP_ME(Phal_Entity, setId, arginfo_phal_entity_setid, ZEND_ACC_PUBLIC)
 	PHP_ME(Phal_Entity, getId, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phal_Entity, setRepositoryKey, arginfo_phal_entity_setrepositorykey, ZEND_ACC_PUBLIC)

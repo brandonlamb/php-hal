@@ -11,7 +11,7 @@ class Entity
     protected id;
     protected title;
     protected key;
-    protected relation;
+    //protected relation;
     protected uri;
     protected entities;
     protected linkedResources;
@@ -24,16 +24,12 @@ class Entity
     /**
      * Constructor
      */
-    public function __construct(string! uri = null)
+    public function __construct()
     {
         let this->entities = [];
         let this->linkedResources = [];
         let this->links = [];
         let this->data = [];
-
-        if typeof uri != "null" {
-            this->setUri(uri);
-        }
     }
 
     public function setId(var id)
@@ -47,24 +43,24 @@ class Entity
         return this->id;
     }
 
-    public function setRepositoryKey($key) -> <\Phal\Entity>
+    public function setRepositoryKey(string! key) -> <\Phal\Entity>
     {
         let this->key = key;
         return this;
     }
 
-    public function getRepositoryKey()
+    public function getRepositoryKey() -> string
     {
         return this->key;
     }
 
-    public function setTitle(var title) -> <\Phal\Entity>
+    public function setTitle(string! title) -> <\Phal\Entity>
     {
         let this->title = title;
         return this;
     }
 
-    public function getTitle()
+    public function getTitle() -> string
     {
         return this->title;
     }
@@ -75,12 +71,12 @@ class Entity
         return this;
     }
 
-    public function getUri()
+    public function getUri() -> string
     {
         return this->uri;
     }
 
-    public function setData(var data) -> <\Phal\Entity>
+    public function setData(array data) -> <\Phal\Entity>
     {
         let this->data = data;
         return this;
@@ -125,7 +121,7 @@ class Entity
         return this;
     }
 
-    public function linkResources(string! rel, var entities)
+    public function linkResources(string! rel, var entities) -> <\Phal\Entity>
     {
         var entity;
 
@@ -138,7 +134,7 @@ class Entity
         return this;
     }
 
-    protected function throwExceptionIfNotLinkableResouce(<\Phal\Entity> entity)
+    protected function throwExceptionIfNotLinkableResouce(<\Phal\Entity> entity) -> void
     {
         var link;
 
@@ -210,7 +206,7 @@ class Entity
         return this->links;
     }
 
-    public function getLinks(rel)
+    public function getLinks(rel) -> array | null
     {
         var link;
         if fetch link, this->links[rel] {
@@ -222,23 +218,14 @@ class Entity
 
     public function addResource(string! rel, <\Phal\Entity> entity, boolean! multi = true) -> <\Phal\Entity>
     {
-        var key;
-
         if unlikely !multi {
             // Set single resource
             let this->entities[rel] = entity;
         } else {
-            // Adding a resource to a collection, make sure rel is an array
-            if !unlikely fetch key, this->entities[rel] {
-                let key = [entity];
-            } else {
-                if unlikely typeof key != "array" {
-                    let key = [entity];
-                } else {
-                    let key[] = entity;
-                }
+            if unlikely !isset this->entities[rel] {
+                let this->entities[rel] = [];
             }
-            let this->entities[rel] = key;
+            let this->entities[rel][] = entity;
         }
 
         return this;
@@ -247,9 +234,17 @@ class Entity
     public function addResources(string! rel, var entities, boolean! overwrite = false)
     {
         var entity;
+
         if unlikely overwrite {
-            let this->entities[rel] = [];
+            for entity in entities {
+                if !(entity instanceof \Phal\Entity) {
+                    throw new \InvalidArgumentException("entity must be a \\Phal\\Entity");
+                }
+            }
+            let this->entities[rel] = entities;
+            return this;
         }
+
         for entity in entities {
             this->addResource(rel, entity, true);
         }
@@ -261,7 +256,7 @@ class Entity
         return this->entities;
     }
 
-    public function getResources(string! rel)
+    public function getResources(string! rel) -> <\Phal\Entity> | null
     {
         var entity;
         if fetch entity, this->entities[rel] {
