@@ -2,8 +2,8 @@
 
 <phpunit bootstrap="tests/bootstrap.php" colors="true">
     <testsuites>
-        <testsuite name="Phal Test Suite">
-            <directory>tests/Phal/</directory>
+        <testsuite name="PhpHal Test Suite">
+            <directory>tests/PhpHal/</directory>
         </testsuite>
     </testsuites>
     <listeners>
@@ -11,7 +11,7 @@
     </listeners>
     <filter>
         <whitelist>
-            <directory suffix=".php">src/Phal/</directory>
+            <directory suffix=".php">src/PhpHal/</directory>
         </whitelist>
     </filter>
 </phpunit>
