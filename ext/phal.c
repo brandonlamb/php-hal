@@ -24,6 +24,16 @@
 #include "kernel/fcall.h"
 #include "kernel/memory.h"
 
+zend_class_entry *phal_format_readerinterface_ce;
+zend_class_entry *phal_format_writerinterface_ce;
+zend_class_entry *phal_linkinterface_ce;
+zend_class_entry *phal_format_abstractreader_ce;
+zend_class_entry *phal_format_abstractwriter_ce;
+zend_class_entry *phal_format_reader_abstractjsonreader_ce;
+zend_class_entry *phal_format_writer_abstractjsonwriter_ce;
+zend_class_entry *phal_entity_ce;
+zend_class_entry *phal_format_reader_hal_jsonreader_ce;
+zend_class_entry *phal_format_writer_hal_jsonwriter_ce;
 zend_class_entry *phal_link_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(phal)
@@ -190,6 +200,16 @@ static PHP_MINIT_FUNCTION(phal)
 	setlocale(LC_ALL, "C");
 #endif
 
+	ZEPHIR_INIT(Phal_Format_ReaderInterface);
+	ZEPHIR_INIT(Phal_Format_WriterInterface);
+	ZEPHIR_INIT(Phal_LinkInterface);
+	ZEPHIR_INIT(Phal_Format_AbstractReader);
+	ZEPHIR_INIT(Phal_Format_AbstractWriter);
+	ZEPHIR_INIT(Phal_Format_Reader_AbstractJsonReader);
+	ZEPHIR_INIT(Phal_Format_Writer_AbstractJsonWriter);
+	ZEPHIR_INIT(Phal_Entity);
+	ZEPHIR_INIT(Phal_Format_Reader_Hal_JsonReader);
+	ZEPHIR_INIT(Phal_Format_Writer_Hal_JsonWriter);
 	ZEPHIR_INIT(Phal_Link);
 
 #if PHP_VERSION_ID < 50500

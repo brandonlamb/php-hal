@@ -28,43 +28,44 @@ ZEPHIR_INIT_CLASS(Phal_Link) {
 	/**
 	 * @var string
 	 */
-	zend_declare_property_string(phal_link_ce, SL("href"), "", ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(phal_link_ce, SL("href"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	/**
 	 * @var bool
 	 */
-	zend_declare_property_bool(phal_link_ce, SL("templated"), 0, ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(phal_link_ce, SL("templated"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	/**
 	 * @var string
 	 */
-	zend_declare_property_string(phal_link_ce, SL("type"), "", ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(phal_link_ce, SL("type"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	/**
 	 * @var string
 	 */
-	zend_declare_property_string(phal_link_ce, SL("deprecation"), "", ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(phal_link_ce, SL("deprecation"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	/**
 	 * @var string
 	 */
-	zend_declare_property_string(phal_link_ce, SL("name"), "", ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(phal_link_ce, SL("name"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	/**
 	 * @var string
 	 */
-	zend_declare_property_string(phal_link_ce, SL("profile"), "", ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(phal_link_ce, SL("profile"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	/**
 	 * @var string
 	 */
-	zend_declare_property_string(phal_link_ce, SL("title"), "", ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(phal_link_ce, SL("title"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	/**
 	 * @var string
 	 */
-	zend_declare_property_string(phal_link_ce, SL("hreflang"), "", ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(phal_link_ce, SL("hreflang"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
+	zend_class_implements(phal_link_ce TSRMLS_CC, 1, phal_linkinterface_ce);
 	return SUCCESS;
 
 }
@@ -76,15 +77,16 @@ ZEPHIR_INIT_CLASS(Phal_Link) {
  */
 PHP_METHOD(Phal_Link, __construct) {
 
-	zval *href_param = NULL;
-	zval *href = NULL;
+	zend_bool templated;
+	zval *href_param = NULL, *templated_param = NULL, *type_param = NULL, *deprecation_param = NULL, *name_param = NULL, *profile_param = NULL, *title_param = NULL, *hreflang_param = NULL;
+	zval *href = NULL, *type = NULL, *deprecation = NULL, *name = NULL, *profile = NULL, *title = NULL, *hreflang = NULL;
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 0, 1, &href_param);
+	zephir_fetch_params(1, 0, 8, &href_param, &templated_param, &type_param, &deprecation_param, &name_param, &profile_param, &title_param, &hreflang_param);
 
 	if (!href_param) {
 		ZEPHIR_INIT_VAR(href);
-		ZVAL_STRING(href, "", 1);
+		ZVAL_EMPTY_STRING(href);
 	} else {
 	if (unlikely(Z_TYPE_P(href_param) != IS_STRING && Z_TYPE_P(href_param) != IS_NULL)) {
 		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'href' must be a string") TSRMLS_CC);
@@ -98,9 +100,122 @@ PHP_METHOD(Phal_Link, __construct) {
 		ZVAL_EMPTY_STRING(href);
 	}
 	}
+	if (!templated_param) {
+		templated = 0;
+	} else {
+	if (unlikely(Z_TYPE_P(templated_param) != IS_BOOL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'templated' must be a bool") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	templated = Z_BVAL_P(templated_param);
+	}
+	if (!type_param) {
+		ZEPHIR_INIT_VAR(type);
+		ZVAL_EMPTY_STRING(type);
+	} else {
+	if (unlikely(Z_TYPE_P(type_param) != IS_STRING && Z_TYPE_P(type_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'type' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (unlikely(Z_TYPE_P(type_param) == IS_STRING)) {
+		type = type_param;
+	} else {
+		ZEPHIR_INIT_VAR(type);
+		ZVAL_EMPTY_STRING(type);
+	}
+	}
+	if (!deprecation_param) {
+		ZEPHIR_INIT_VAR(deprecation);
+		ZVAL_EMPTY_STRING(deprecation);
+	} else {
+	if (unlikely(Z_TYPE_P(deprecation_param) != IS_STRING && Z_TYPE_P(deprecation_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'deprecation' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (unlikely(Z_TYPE_P(deprecation_param) == IS_STRING)) {
+		deprecation = deprecation_param;
+	} else {
+		ZEPHIR_INIT_VAR(deprecation);
+		ZVAL_EMPTY_STRING(deprecation);
+	}
+	}
+	if (!name_param) {
+		ZEPHIR_INIT_VAR(name);
+		ZVAL_EMPTY_STRING(name);
+	} else {
+	if (unlikely(Z_TYPE_P(name_param) != IS_STRING && Z_TYPE_P(name_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'name' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (unlikely(Z_TYPE_P(name_param) == IS_STRING)) {
+		name = name_param;
+	} else {
+		ZEPHIR_INIT_VAR(name);
+		ZVAL_EMPTY_STRING(name);
+	}
+	}
+	if (!profile_param) {
+		ZEPHIR_INIT_VAR(profile);
+		ZVAL_EMPTY_STRING(profile);
+	} else {
+	if (unlikely(Z_TYPE_P(profile_param) != IS_STRING && Z_TYPE_P(profile_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'profile' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (unlikely(Z_TYPE_P(profile_param) == IS_STRING)) {
+		profile = profile_param;
+	} else {
+		ZEPHIR_INIT_VAR(profile);
+		ZVAL_EMPTY_STRING(profile);
+	}
+	}
+	if (!title_param) {
+		ZEPHIR_INIT_VAR(title);
+		ZVAL_EMPTY_STRING(title);
+	} else {
+	if (unlikely(Z_TYPE_P(title_param) != IS_STRING && Z_TYPE_P(title_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'title' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (unlikely(Z_TYPE_P(title_param) == IS_STRING)) {
+		title = title_param;
+	} else {
+		ZEPHIR_INIT_VAR(title);
+		ZVAL_EMPTY_STRING(title);
+	}
+	}
+	if (!hreflang_param) {
+		ZEPHIR_INIT_VAR(hreflang);
+		ZVAL_EMPTY_STRING(hreflang);
+	} else {
+	if (unlikely(Z_TYPE_P(hreflang_param) != IS_STRING && Z_TYPE_P(hreflang_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'hreflang' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (unlikely(Z_TYPE_P(hreflang_param) == IS_STRING)) {
+		hreflang = hreflang_param;
+	} else {
+		ZEPHIR_INIT_VAR(hreflang);
+		ZVAL_EMPTY_STRING(hreflang);
+	}
+	}
 
 
 	zephir_update_property_this(this_ptr, SL("href"), href TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("templated"), templated ? ZEPHIR_GLOBAL(global_true) : ZEPHIR_GLOBAL(global_false) TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("type"), type TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("deprecation"), deprecation TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("name"), name TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("profile"), profile TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("title"), title TSRMLS_CC);
+	zephir_update_property_this(this_ptr, SL("hreflang"), hreflang TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 
 }
@@ -109,7 +224,7 @@ PHP_METHOD(Phal_Link, __construct) {
  * Set href
  *
  * @param string href
- * @return \Phal\Link
+ * @return \Phal\LinkInterfaceInterface
  */
 PHP_METHOD(Phal_Link, setHref) {
 
@@ -153,7 +268,7 @@ PHP_METHOD(Phal_Link, getHref) {
  * Set templated
  *
  * @param boolean templated
- * @return \Phal\Link
+ * @return \Phal\LinkInterface
  */
 PHP_METHOD(Phal_Link, setTemplated) {
 
@@ -186,7 +301,7 @@ PHP_METHOD(Phal_Link, getTemplated) {
  * Set type
  *
  * @param string type
- * @return \Phal\Link
+ * @return \Phal\LinkInterface
  */
 PHP_METHOD(Phal_Link, setType) {
 
@@ -230,7 +345,7 @@ PHP_METHOD(Phal_Link, getType) {
  * Set deprecation
  *
  * @param string deprecation
- * @return \Phal\Link
+ * @return \Phal\LinkInterface
  */
 PHP_METHOD(Phal_Link, setDeprecation) {
 
@@ -274,7 +389,7 @@ PHP_METHOD(Phal_Link, getDeprecation) {
  * Set name
  *
  * @param string name
- * @return \Phal\Link
+ * @return \Phal\LinkInterface
  */
 PHP_METHOD(Phal_Link, setName) {
 
@@ -318,7 +433,7 @@ PHP_METHOD(Phal_Link, getName) {
  * Set profile
  *
  * @param string profile
- * @return \Phal\Link
+ * @return \Phal\LinkInterface
  */
 PHP_METHOD(Phal_Link, setProfile) {
 
@@ -362,7 +477,7 @@ PHP_METHOD(Phal_Link, getProfile) {
  * Set name
  *
  * @param string name
- * @return \Phal\Link
+ * @return \Phal\LinkInterface
  */
 PHP_METHOD(Phal_Link, setTitle) {
 
@@ -406,7 +521,7 @@ PHP_METHOD(Phal_Link, getTitle) {
  * Set hreflang
  *
  * @param string hreflang
- * @return \Phal\Link
+ * @return \Phal\LinkInterface
  */
 PHP_METHOD(Phal_Link, setHreflang) {
 
@@ -475,27 +590,61 @@ PHP_METHOD(Phal_Link, getAttributes) {
  */
 PHP_METHOD(Phal_Link, toArray) {
 
-	zval *_2;
-	int ZEPHIR_LAST_CALL_STATUS;
-	zephir_nts_static zephir_fcall_cache_entry *_1 = NULL, *_4 = NULL;
-	zval *_0 = NULL, *_3;
+	zval *_0, *_1, *_2;
+	zval *data;
 
 	ZEPHIR_MM_GROW();
+	ZEPHIR_INIT_VAR(data);
+	array_init(data);
 
-	ZEPHIR_CALL_FUNCTION(&_0, "get_object_vars", &_1, this_ptr);
-	zephir_check_call_status();
-	ZEPHIR_INIT_VAR(_2);
-	array_init_size(_2, 3);
-	zephir_array_fast_append(_2, this_ptr);
-	ZEPHIR_INIT_VAR(_3);
-	ZVAL_STRING(_3, "filterArray", 1);
-	zephir_array_fast_append(_2, _3);
-	ZEPHIR_RETURN_CALL_FUNCTION("array_filter", &_4, _0, _2);
-	zephir_check_call_status();
-	RETURN_MM();
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("href"), PH_NOISY_CC);
+	if (!ZEPHIR_IS_STRING(_0, "")) {
+		_1 = zephir_fetch_nproperty_this(this_ptr, SL("href"), PH_NOISY_CC);
+		zephir_array_update_string(&data, SL("href"), &_1, PH_COPY | PH_SEPARATE);
+	}
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("templated"), PH_NOISY_CC);
+	if (zephir_is_true(_1)) {
+		zephir_array_update_string(&data, SL("templated"), &ZEPHIR_GLOBAL(global_true), PH_COPY | PH_SEPARATE);
+	}
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("type"), PH_NOISY_CC);
+	if (!ZEPHIR_IS_STRING(_1, "")) {
+		_2 = zephir_fetch_nproperty_this(this_ptr, SL("type"), PH_NOISY_CC);
+		zephir_array_update_string(&data, SL("type"), &_2, PH_COPY | PH_SEPARATE);
+	}
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("deprecation"), PH_NOISY_CC);
+	if (!ZEPHIR_IS_STRING(_1, "")) {
+		_2 = zephir_fetch_nproperty_this(this_ptr, SL("deprecation"), PH_NOISY_CC);
+		zephir_array_update_string(&data, SL("deprecation"), &_2, PH_COPY | PH_SEPARATE);
+	}
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("name"), PH_NOISY_CC);
+	if (!ZEPHIR_IS_STRING(_1, "")) {
+		_2 = zephir_fetch_nproperty_this(this_ptr, SL("name"), PH_NOISY_CC);
+		zephir_array_update_string(&data, SL("name"), &_2, PH_COPY | PH_SEPARATE);
+	}
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("profile"), PH_NOISY_CC);
+	if (!ZEPHIR_IS_STRING(_1, "")) {
+		_2 = zephir_fetch_nproperty_this(this_ptr, SL("profile"), PH_NOISY_CC);
+		zephir_array_update_string(&data, SL("profile"), &_2, PH_COPY | PH_SEPARATE);
+	}
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("title"), PH_NOISY_CC);
+	if (!ZEPHIR_IS_STRING(_1, "")) {
+		_2 = zephir_fetch_nproperty_this(this_ptr, SL("title"), PH_NOISY_CC);
+		zephir_array_update_string(&data, SL("title"), &_2, PH_COPY | PH_SEPARATE);
+	}
+	_1 = zephir_fetch_nproperty_this(this_ptr, SL("hreflang"), PH_NOISY_CC);
+	if (!ZEPHIR_IS_STRING(_1, "")) {
+		_2 = zephir_fetch_nproperty_this(this_ptr, SL("hreflang"), PH_NOISY_CC);
+		zephir_array_update_string(&data, SL("hreflang"), &_2, PH_COPY | PH_SEPARATE);
+	}
+	RETURN_CTOR(data);
 
 }
 
+/**
+ * Return serialized string
+ *
+ * @return string
+ */
 PHP_METHOD(Phal_Link, __toString) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -505,24 +654,6 @@ PHP_METHOD(Phal_Link, __toString) {
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "gethref", NULL);
 	zephir_check_call_status();
 	RETURN_MM();
-
-}
-
-/**
- * Filter method for array_filter
- *
- * @param mixed value
- * @return boolean
- */
-PHP_METHOD(Phal_Link, filterArray) {
-
-	zval *value;
-
-	zephir_fetch_params(0, 1, 0, &value);
-
-
-
-	RETURN_BOOL(Z_TYPE_P(value) != IS_NULL);
 
 }
 

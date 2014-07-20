@@ -1,65 +1,81 @@
 
 namespace Phal;
 
-class Link
+class Link implements LinkInterface
 {
     /**
      * @var string
      */
-    protected href = "";
+    protected href;
 
     /**
      * @var bool
      */
-    protected templated = false;
+    protected templated;
 
     /**
      * @var string
      */
-    protected type = "";
+    protected type;
 
     /**
      * @var string
      */
-    protected deprecation = "";
+    protected deprecation;
 
     /**
      * @var string
      */
-    protected name = "";
+    protected name;
 
     /**
      * @var string
      */
-    protected profile = "";
+    protected profile;
 
     /**
      * @var string
      */
-    protected title = "";
+    protected title;
 
     /**
      * @var string
      */
-    protected hreflang = "";
+    protected hreflang;
 
     /**
      * Constructor
      *
      * @param string href
      */
-    public function __construct(string! href = "")
+    public function __construct(
+        string! href = null,
+        boolean! templated = false,
+        string! type = null,
+        string! deprecation = null,
+        string! name = null,
+        string! profile = null,
+        string! title = null,
+        string! hreflang = null
+    )
     {
         let this->href = href;
+        let this->templated = templated;
+        let this->type = type;
+        let this->deprecation = deprecation;
+        let this->name = name;
+        let this->profile = profile;
+        let this->title = title;
+        let this->hreflang = hreflang;
     }
 
     /**
      * Set href
      *
      * @param string href
-     * @return \Phal\Link
+     * @return \Phal\LinkInterfaceInterface
      */
-    public function setHref(string! href) -> <\Phal\Link>
+    public function setHref(string! href) -> <\Phal\LinkInterface>
     {
         let this->href = href;
         return this;
@@ -79,9 +95,9 @@ class Link
      * Set templated
      *
      * @param boolean templated
-     * @return \Phal\Link
+     * @return \Phal\LinkInterface
      */
-    public function setTemplated(boolean templated) -> <\Phal\Link>
+    public function setTemplated(boolean templated) -> <\Phal\LinkInterface>
     {
         let this->templated = templated;
         return this;
@@ -101,9 +117,9 @@ class Link
      * Set type
      *
      * @param string type
-     * @return \Phal\Link
+     * @return \Phal\LinkInterface
      */
-    public function setType(string! type) -> <\Phal\Link>
+    public function setType(string! type) -> <\Phal\LinkInterface>
     {
         let this->type = type;
         return this;
@@ -123,9 +139,9 @@ class Link
      * Set deprecation
      *
      * @param string deprecation
-     * @return \Phal\Link
+     * @return \Phal\LinkInterface
      */
-    public function setDeprecation(string! deprecation) -> <\Phal\Link>
+    public function setDeprecation(string! deprecation) -> <\Phal\LinkInterface>
     {
         let this->deprecation = deprecation;
         return this;
@@ -145,9 +161,9 @@ class Link
      * Set name
      *
      * @param string name
-     * @return \Phal\Link
+     * @return \Phal\LinkInterface
      */
-    public function setName(string! name) -> <\Phal\Link>
+    public function setName(string! name) -> <\Phal\LinkInterface>
     {
         let this->name = name;
         return this;
@@ -167,9 +183,9 @@ class Link
      * Set profile
      *
      * @param string profile
-     * @return \Phal\Link
+     * @return \Phal\LinkInterface
      */
-    public function setProfile(string! profile) -> <\Phal\Link>
+    public function setProfile(string! profile) -> <\Phal\LinkInterface>
     {
         let this->profile = profile;
         return this;
@@ -189,9 +205,9 @@ class Link
      * Set name
      *
      * @param string name
-     * @return \Phal\Link
+     * @return \Phal\LinkInterface
      */
-    public function setTitle(string! title) -> <\Phal\Link>
+    public function setTitle(string! title) -> <\Phal\LinkInterface>
     {
         let this->title = title;
         return this;
@@ -211,9 +227,9 @@ class Link
      * Set hreflang
      *
      * @param string hreflang
-     * @return \Phal\Link
+     * @return \Phal\LinkInterface
      */
-    public function setHreflang(string! hreflang) -> <\Phal\Link>
+    public function setHreflang(string! hreflang) -> <\Phal\LinkInterface>
     {
         let this->hreflang = hreflang;
         return this;
@@ -250,22 +266,50 @@ class Link
      */
     public function toArray() -> array
     {
-        return array_filter(get_object_vars(this), [this, "filterArray"]);
-    }
+        array data = [];
 
-    public function __toString() -> string
-    {
-        return this->{"getHref"}();
+        if this->href != "" {
+            let data["href"] = this->href;
+        }
+
+        if this->templated {
+            let data["templated"] = true;
+        }
+
+        if this->type != "" {
+            let data["type"] = this->type;
+        }
+
+        if this->deprecation != "" {
+            let data["deprecation"] = this->deprecation;
+        }
+
+        if this->name != "" {
+            let data["name"] = this->name;
+        }
+
+        if this->profile != "" {
+            let data["profile"] = this->profile;
+        }
+
+        if this->title != "" {
+            let data["title"] = this->title;
+        }
+
+        if this->hreflang != "" {
+            let data["hreflang"] = this->hreflang;
+        }
+
+        return data;
     }
 
     /**
-     * Filter method for array_filter
+     * Return serialized string
      *
-     * @param mixed value
-     * @return boolean
+     * @return string
      */
-    public function filterArray(var value) -> boolean
+    public function __toString() -> string
     {
-        return value !== null;
+        return this->{"getHref"}();
     }
 }

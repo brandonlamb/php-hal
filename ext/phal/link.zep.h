@@ -23,10 +23,16 @@ PHP_METHOD(Phal_Link, getHreflang);
 PHP_METHOD(Phal_Link, getAttributes);
 PHP_METHOD(Phal_Link, toArray);
 PHP_METHOD(Phal_Link, __toString);
-PHP_METHOD(Phal_Link, filterArray);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phal_link___construct, 0, 0, 0)
 	ZEND_ARG_INFO(0, href)
+	ZEND_ARG_INFO(0, templated)
+	ZEND_ARG_INFO(0, type)
+	ZEND_ARG_INFO(0, deprecation)
+	ZEND_ARG_INFO(0, name)
+	ZEND_ARG_INFO(0, profile)
+	ZEND_ARG_INFO(0, title)
+	ZEND_ARG_INFO(0, hreflang)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phal_link_sethref, 0, 0, 1)
@@ -61,10 +67,6 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_phal_link_sethreflang, 0, 0, 1)
 	ZEND_ARG_INFO(0, hreflang)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phal_link_filterarray, 0, 0, 1)
-	ZEND_ARG_INFO(0, value)
-ZEND_END_ARG_INFO()
-
 ZEPHIR_INIT_FUNCS(phal_link_method_entry) {
 	PHP_ME(Phal_Link, __construct, arginfo_phal_link___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
 	PHP_ME(Phal_Link, setHref, arginfo_phal_link_sethref, ZEND_ACC_PUBLIC)
@@ -86,6 +88,5 @@ ZEPHIR_INIT_FUNCS(phal_link_method_entry) {
 	PHP_ME(Phal_Link, getAttributes, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phal_Link, toArray, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phal_Link, __toString, NULL, ZEND_ACC_PUBLIC)
-	PHP_ME(Phal_Link, filterArray, arginfo_phal_link_filterarray, ZEND_ACC_PUBLIC)
   PHP_FE_END
 };
