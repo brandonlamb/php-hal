@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="tests/bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="Phal Test Suite">
+            <directory>tests/Phal/</directory>
+        </testsuite>
+    </testsuites>
+    <listeners>
+        <listener class="\Mockery\Adapter\Phpunit\TestListener"></listener>
+    </listeners>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/Phal/</directory>
+        </whitelist>
+    </filter>
+</phpunit>

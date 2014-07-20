@@ -5,7 +5,7 @@ namespace Phal\Format\Writer;
 use Phal\Format\AbstractWriter;
 use Phal\Format\WriterInterface;
 use Phal\Resource;
-use XMLWriter;
+use XMLWriter as BasicXmlWriter;
 
 abstract class AbstractXmlWriter extends AbstractWriter implements WriterInterface
 {
@@ -17,7 +17,7 @@ abstract class AbstractXmlWriter extends AbstractWriter implements WriterInterfa
      * @param string $rel
      * @return array
      */
-    abstract protected function resourceToArray(XMLWriter $writer, Resource $resource, $rel = null);
+    abstract protected function resourceToArray(BasicXmlWriter $writer, Resource $resource, $rel = null);
 
     /**
      * Execute parsing
@@ -27,7 +27,7 @@ abstract class AbstractXmlWriter extends AbstractWriter implements WriterInterfa
      */
     public function execute(Resource $resource)
     {
-        $writer = new XMLWriter;
+        $writer = new BasicXmlWriter;
         $writer->openMemory();
         $writer->setIndentString('  ');
         $writer->setIndent($this->pretty);

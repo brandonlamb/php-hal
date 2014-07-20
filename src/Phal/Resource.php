@@ -194,7 +194,7 @@ class Resource
         return null;
     }
 
-    public function addResource($rel, Resource $resource, $multi = true)
+    public function addResource($rel, Resource $resource, $multi = false)
     {
         $rel = (string) $rel;
 
@@ -214,19 +214,22 @@ class Resource
     {
         $rel = (string) $rel;
 
-        if ($overwrite) {
-            foreach ($resources as &$resource) {
-                if (!$resource instanceof Resource) {
-                    throw new InvalidArgumentException('Invalid array, must be []Resource');
-                }
+        foreach ($resources as &$resource) {
+            if (!$resource instanceof Resource) {
+                throw new \InvalidArgumentException('Invalid array, must be []Resource');
             }
-            $this->resources[$rel] = $resources;
-            return $this;
         }
 
-        foreach ($resources as &$resource) {
-            $this->addResource($rel, $resource, true);
+        if ($overwrite) {
+            $this->resources[$rel] = $resources;
+        } else {
+            if (isset($this->resources[$rel])) {
+                $this->resources[$rel] = array_merge($this->resources[$rel], $resources);
+            } else {
+                $this->resources[$rel] = $resources;
+            }
         }
+
         return $this;
     }
 

@@ -116,7 +116,7 @@ class Link implements LinkInterface
      *
      * @return boolean
      */
-    public function getTemplated()
+    public function isTemplated()
     {
         return (bool) $this->templated;
     }
@@ -274,37 +274,14 @@ class Link implements LinkInterface
     {
         $data = [];
 
-        if ($this->href !== '') {
-            $data['href'] = $this->href;
-        }
-
-        if ($this->templated) {
-            $data['templated'] = true;
-        }
-
-        if ($this->type !== '') {
-            $data['type'] = $this->type;
-        }
-
-        if ($this->deprecation !== '') {
-            $data['deprecation'] = $this->deprecation;
-        }
-
-        if ($this->name !== '') {
-            $data['name'] = $this->name;
-        }
-
-        if ($this->profile !== '') {
-            $data['profile'] = $this->profile;
-        }
-
-        if ($this->title !== '') {
-            $data['title'] = $this->title;
-        }
-
-        if ($this->hreflang !== '') {
-            $data['hreflang'] = $this->hreflang;
-        }
+        isset($this->href) && $data['href'] = $this->href;
+        $this->templated && $data['templated'] = true;
+        isset($this->type) && $data['type'] = $this->type;
+        isset($this->deprecation) && $data['deprecation'] = $this->deprecation;
+        isset($this->name) && $data['name'] = $this->name;
+        isset($this->profile) && $data['profile'] = $this->profile;
+        isset($this->title) && $data['title'] = $this->title;
+        isset($this->hreflang) && $data['hreflang'] = $this->hreflang;
 
         return $data;
     }

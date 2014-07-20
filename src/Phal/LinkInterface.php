@@ -55,7 +55,7 @@ interface LinkInterface
      *
      * @return boolean
      */
-    public function getTemplated();
+    public function isTemplated();
 
     /**
      * Set type

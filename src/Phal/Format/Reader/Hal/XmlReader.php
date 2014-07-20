@@ -67,7 +67,7 @@ class XmlReader extends AbstractXmlReader
 
         $embeddeds = [];
         $links = [];
-        $data = [];
+        $data2 = [];
 
         foreach ($data['values'] as &$node) {
             if ($this->nodeIsResource($node)) {
@@ -84,11 +84,11 @@ class XmlReader extends AbstractXmlReader
                     $toSave = $node['values'];
                 }
 
-                $data[$node['name']][] = $toSave;
+                $data2[$node['name']][] = $toSave;
             }
         }
 
-        $resource->setData($data);
+        $resource->setData($data2);
 
         foreach ($links as $rel => $link) {
             $resource->setLinks($rel, $link);

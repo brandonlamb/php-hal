@@ -1,8 +1,10 @@
 <?php
 
+namespace Phal\Format\Reader;
+
 use Phal\Format\AbstractReader;
 use Phal\Format\ReaderInterface;
-use XMLReader;
+use XMLReader as BasicXmlReader;
 
 abstract class AbstractXmlReader extends AbstractReader implements ReaderInterface
 {
@@ -22,24 +24,30 @@ abstract class AbstractXmlReader extends AbstractReader implements ReaderInterfa
      */
     public function execute($input)
     {
-        $reader = new XMLReader();
+        $reader = new BasicXmlReader();
         $reader->xml($input);
         $data = $this->xmlToArray($reader);
 
         return $this->arrayToResource($data);
     }
 
-    protected function xmlToArray(XMLReader $xml)
+    /**
+     * Parse xml object into array
+     *
+     * @param \XMLReader $xml
+     * @return array
+     */
+    protected function xmlToArray(BasicXmlReader $xml)
     {
         $data = [];
 
         $i = 0;
         while ($xml->read()) {
-            if ($xml->nodeType == XMLReader::END_ELEMENT) {
+            if ($xml->nodeType == BasicXmlReader::END_ELEMENT) {
                 break;
             }
 
-            if ($xml->nodeType === XMLReader::ELEMENT && !$xml->isEmptyElement) {
+            if ($xml->nodeType === BasicXmlReader::ELEMENT && !$xml->isEmptyElement) {
                 $data[$i]['name'] = $xml->name;
                 $data[$i]['values'] = $this->xmlToArray($xml);
                 $data[$i]['attributes'] = $this->getAttributesFromNode($xml);
@@ -49,7 +57,7 @@ abstract class AbstractXmlReader extends AbstractReader implements ReaderInterfa
                 $data[$i]['values'] = null;
                 $data[$i]['attributes'] = $this->getAttributesFromNode($xml);
                 $i++;
-            } elseif($xml->nodeType == XMLReader::TEXT) {
+            } elseif($xml->nodeType == BasicXmlReader::TEXT) {
                 $data = $xml->value;
             }
         }
@@ -57,7 +65,7 @@ abstract class AbstractXmlReader extends AbstractReader implements ReaderInterfa
         return $data;
     }
 
-    private function getAttributesFromNode(XMLReader $xml)
+    private function getAttributesFromNode(BasicXmlReader $xml)
     {
         if (!$xml->hasAttributes) {
             return null;

@@ -8,10 +8,18 @@
     "license": "MIT",
     "authors": [
         {
+            "name": "Máximo Cuadros",
+            "email": "mcuadros@gmail.com"
+        },
+        {
             "name": "Brandon Lamb",
             "homepage": "https://gitub.com/brandonlamb"
         }
     ],
+    "require-dev": {
+        "mockery/mockery": "0.8.0",
+        "phpunit/phpunit": "3.7.*"
+    },
     "autoload": {
         "psr-0": {
             "Phal": "src"
