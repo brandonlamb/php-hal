@@ -3,7 +3,7 @@
     "description": "REST HAL library as a C-extension for PHP",
     "keywords": ["extension"],
     "require": {
-        "php": "~5.5"
+        "php": ">=5.4.0"
     },
     "license": "MIT",
     "authors": [
