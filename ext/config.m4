@@ -5,8 +5,8 @@ if test "$PHP_PHAL" = "yes"; then
 	phal_sources="phal.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/exit.c phal/entity.zep.c
 	phal/format/abstractreader.zep.c
 	phal/format/abstractwriter.zep.c
-	phal/format/reader/hal/jsonreader.zep.c
 	phal/format/reader/abstractjsonreader.zep.c
+	phal/format/reader/hal/jsonreader.zep.c
 	phal/format/readerinterface.zep.c
 	phal/format/writer/abstractjsonwriter.zep.c
 	phal/format/writer/hal/jsonwriter.zep.c

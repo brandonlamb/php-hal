@@ -13,7 +13,7 @@ class Entity
     protected key;
     protected relation;
     protected uri;
-    protected resources;
+    protected entities;
     protected linkedResources;
     protected links;
     protected data;
@@ -24,12 +24,16 @@ class Entity
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(string! uri = null)
     {
-        let this->resources = [];
+        let this->entities = [];
         let this->linkedResources = [];
         let this->links = [];
         let this->data = [];
+
+        if typeof uri != "null" {
+            this->setUri(uri);
+        }
     }
 
     public function setId(var id)
@@ -65,7 +69,7 @@ class Entity
         return this->title;
     }
 
-    public function setUri(var uri) -> <\Phal\Entity>
+    public function setUri(string! uri) -> <\Phal\Entity>
     {
         let this->uri = uri;
         return this;
@@ -76,7 +80,7 @@ class Entity
         return this->uri;
     }
 
-    public function setData(array data) -> <\Phal\Entity>
+    public function setData(var data) -> <\Phal\Entity>
     {
         let this->data = data;
         return this;
@@ -99,7 +103,7 @@ class Entity
         return this;
     }
 
-    public function setLinks(string! rel, array links) -> <\Phal\Entity>
+    public function setLinks(string! rel, var links) -> <\Phal\Entity>
     {
         var link;
 
@@ -114,40 +118,40 @@ class Entity
         return this;
     }
 
-    public function linkResource(string! rel, <\Phal\Entity> $resource) -> <\Phal\Entity>
+    public function linkResource(string! rel, <\Phal\Entity> entity) -> <\Phal\Entity>
     {
-        this->throwExceptionIfNotLinkableResouce($resource);
-        let this->linkedResources[rel] = $resource;
+        this->throwExceptionIfNotLinkableResouce(entity);
+        let this->linkedResources[rel] = entity;
         return this;
     }
 
-    public function linkResources(string! rel, array resources)
+    public function linkResources(string! rel, var entities)
     {
-        var $resource;
+        var entity;
 
-        for $resource in resources {
-            this->throwExceptionIfNotLinkableResouce($resource);
+        for entity in entities {
+            this->throwExceptionIfNotLinkableResouce(entity);
         }
 
-        let this->linkedResources[rel] = resources;
+        let this->linkedResources[rel] = entities;
 
         return this;
     }
 
-    protected function throwExceptionIfNotLinkableResouce(<\Phal\Entity> $resource)
+    protected function throwExceptionIfNotLinkableResouce(<\Phal\Entity> entity)
     {
         var link;
 
-        let link = $resource->getSelfLink();
+        let link = entity->getSelfLink();
 
         if !link {
             throw new InvalidArgumentException("This resource not contains a valid URI");
         }
     }
 
-    public function expandLinkedResourcesTree(array path) -> void
+    public function expandLinkedResourcesTree(var path) -> void
     {
-        var rel, $resource, resources;
+        var rel, entity, entities;
 
         if count(path) == 1 {
             this->expandLinkedResources(end(path));
@@ -157,33 +161,33 @@ class Entity
         let rel = array_shift(path);
         this->expandLinkedResources(rel);
 
-        let resources = this->getResources(rel);
-        if !resources {
+        let entities = this->getResources(rel);
+        if !entities {
             return;
         }
 
-        if typeof resources != "array" {
-            let resources = [resources];
+        if typeof entities != "array" {
+            let entities = [entities];
         }
 
-        for $resource in resources {
-            $resource->expandLinkedResourcesTree(path);
+        for entity in entities {
+            entity->expandLinkedResourcesTree(path);
         }
     }
 
     public function expandLinkedResources(string! rel) -> void
     {
-        var resources;
+        var entities;
 
-        let resources = this->getLinkedResources(rel);
-        if !resources {
+        let entities = this->getLinkedResources(rel);
+        if !entities {
             return;
         }
 
-        if typeof resources != "array" {
-            this->addResource(rel, resources);
+        if typeof entities != "array" {
+            this->addResource(rel, entities);
         } else {
-            this->addResources(rel, resources);
+            this->addResources(rel, entities);
         }
     }
 
@@ -194,9 +198,9 @@ class Entity
 
     public function getLinkedResources(rel) -> array | null
     {
-        var $resource;
-        if fetch $resource, this->linkedResources[rel] {
-            return $resource;
+        var entity;
+        if fetch entity, this->linkedResources[rel] {
+            return entity;
         }
         return null;
     }
@@ -216,37 +220,46 @@ class Entity
         return null;
     }
 
-    public function addResource(string! rel, <\Phal\Entity> $resource) -> <\Phal\Entity>
+    public function addResource(string! rel, <\Phal\Entity> entity, boolean! multi = true) -> <\Phal\Entity>
     {
-        let this->resources[rel] = $resource;
-        return this;
-    }
-
-    public function addResources(string! rel, array resources)
-    {
-        var $resource;
-
-        for $resource in resources {
-            if !($resource instanceof \Phal\Entity) {
-                throw new InvalidArgumentException("Invalid array, must be []Entity");
+        if unlikely !multi {
+            // Set single resource
+            let this->entities[rel] = entity;
+        } else {
+            // Adding a resource to a collection, make sure rel is an array
+            if unlikely !isset this->entities[rel] {
+                let this->entities[rel] = [];
+                let this->entities[rel][] = entity;
+            } else {
+                let this->entities[rel][] = entity;
             }
         }
 
-        let this->resources[rel] = resources;
+        return this;
+    }
 
+    public function addResources(string! rel, var entities, boolean! overwrite = false)
+    {
+        var entity;
+        if unlikely overwrite {
+            let this->entities[rel] = [];
+        }
+        for entity in entities {
+            this->addResource(rel, entity, true);
+        }
         return this;
     }
 
     public function getAllResources() -> array
     {
-        return this->resources;
+        return this->entities;
     }
 
     public function getResources(string! rel)
     {
-        var $resource;
-        if fetch $resource, this->resources[rel] {
-            return $resource;
+        var entity;
+        if fetch entity, this->entities[rel] {
+            return entity;
         }
         return null;
     }

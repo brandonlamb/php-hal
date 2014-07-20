@@ -64,7 +64,7 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, arrayToResource) {
 
 
 	if (Z_TYPE_P(data) != IS_ARRAY) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "data must be array", "phal/format/reader/Hal/jsonreader.zep", 28);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "data must be array", "phal/format/reader/hal/jsonreader.zep", 28);
 		return;
 	}
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "dotransformembedded", NULL, data);
@@ -93,7 +93,7 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, transformMetadata) {
 		return;
 	}
 	if (Z_TYPE_P(data) != IS_ARRAY) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "data must be array", "phal/format/reader/Hal/jsonreader.zep", 43);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "data must be array", "phal/format/reader/hal/jsonreader.zep", 43);
 		return;
 	}
 	ZEPHIR_OBS_VAR(key);
@@ -118,12 +118,11 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, transformMetadata) {
  */
 PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, transformLinks) {
 
-	zephir_nts_static zephir_fcall_cache_entry *_5 = NULL;
-	zephir_fcall_cache_entry *_3 = NULL, *_6 = NULL, *_7 = NULL, *_8 = NULL, *_9 = NULL;
+	zephir_fcall_cache_entry *_4 = NULL, *_5 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 	HashTable *_1;
 	HashPosition _0;
-	zval *resource, *linksByRel, *rel = NULL, *data = NULL, *link = NULL, *links = NULL, **_2, *_4 = NULL;
+	zval *resource, *linksByRel, *rel = NULL, *data = NULL, *link = NULL, *links = NULL, **_2, *_3 = NULL;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 2, 0, &resource, &linksByRel);
@@ -135,7 +134,7 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, transformLinks) {
 		return;
 	}
 	if (Z_TYPE_P(linksByRel) != IS_ARRAY) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "linksByRel must be array", "phal/format/reader/Hal/jsonreader.zep", 66);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "linksByRel must be array", "phal/format/reader/hal/jsonreader.zep", 66);
 		return;
 	}
 	zephir_is_iterable(linksByRel, &_1, &_0, 0, 0);
@@ -146,21 +145,21 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, transformLinks) {
 		ZEPHIR_GET_HMKEY(rel, _1, _0);
 		ZEPHIR_GET_HVALUE(data, _2);
 		if (ZEPHIR_IS_STRING(rel, "self")) {
-			ZEPHIR_CALL_METHOD(NULL, this_ptr, "transformselflink", &_3, resource, data);
+			ZEPHIR_CALL_METHOD(NULL, this_ptr, "transformselflink", NULL, resource, data);
 			zephir_check_call_status();
 			continue;
 		}
-		ZEPHIR_CALL_METHOD(&_4, this_ptr, "isassocarray", &_5, data);
+		ZEPHIR_CALL_METHOD(&_3, this_ptr, "isassocarray", NULL, data);
 		zephir_check_call_status();
-		if (zephir_is_true(_4)) {
-			ZEPHIR_CALL_METHOD(&link, this_ptr, "dotransformlink", &_6, data);
+		if (zephir_is_true(_3)) {
+			ZEPHIR_CALL_METHOD(&link, this_ptr, "dotransformlink", NULL, data);
 			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(NULL, resource, "setlink", &_7, rel, link);
+			ZEPHIR_CALL_METHOD(NULL, resource, "setlink", &_4, rel, link);
 			zephir_check_call_status();
 		} else {
-			ZEPHIR_CALL_METHOD(&links, this_ptr, "dotransformlinks", &_8, data);
+			ZEPHIR_CALL_METHOD(&links, this_ptr, "dotransformlinks", NULL, data);
 			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(NULL, resource, "setlinks", &_9, rel, links);
+			ZEPHIR_CALL_METHOD(NULL, resource, "setlinks", &_5, rel, links);
 			zephir_check_call_status();
 		}
 	}
@@ -188,7 +187,7 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, transformSelfLink) {
 		return;
 	}
 	if (Z_TYPE_P(data) != IS_ARRAY) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "data must be array", "phal/format/reader/Hal/jsonreader.zep", 95);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "data must be array", "phal/format/reader/hal/jsonreader.zep", 95);
 		return;
 	}
 	ZEPHIR_OBS_VAR(key);
@@ -211,7 +210,6 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, transformSelfLink) {
  */
 PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, doTransformLinks) {
 
-	zephir_fcall_cache_entry *_4 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 	HashTable *_1;
 	HashPosition _0;
@@ -223,7 +221,7 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, doTransformLinks) {
 
 
 	if (Z_TYPE_P(data) != IS_ARRAY) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "data must be array", "phal/format/reader/Hal/jsonreader.zep", 116);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "data must be array", "phal/format/reader/hal/jsonreader.zep", 116);
 		return;
 	}
 	ZEPHIR_INIT_VAR(links);
@@ -234,7 +232,7 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, doTransformLinks) {
 	  ; zephir_hash_move_forward_ex(_1, &_0)
 	) {
 		ZEPHIR_GET_HVALUE(link, _2);
-		ZEPHIR_CALL_METHOD(&_3, this_ptr, "dotransformlink", &_4, link);
+		ZEPHIR_CALL_METHOD(&_3, this_ptr, "dotransformlink", NULL, link);
 		zephir_check_call_status();
 		zephir_array_append(&links, _3, PH_SEPARATE);
 	}
@@ -313,8 +311,7 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, doTransformLink) {
  */
 PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, transformEmbeddeds) {
 
-	zephir_fcall_cache_entry *_5 = NULL, *_6 = NULL, *_7 = NULL, *_8 = NULL;
-	zephir_nts_static zephir_fcall_cache_entry *_4 = NULL;
+	zephir_fcall_cache_entry *_4 = NULL, *_5 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 	HashTable *_1;
 	HashPosition _0;
@@ -330,7 +327,7 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, transformEmbeddeds) {
 		return;
 	}
 	if (Z_TYPE_P(embeddedsByRel) != IS_ARRAY) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "embeddedsByRel must be array", "phal/format/reader/Hal/jsonreader.zep", 182);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "embeddedsByRel must be array", "phal/format/reader/hal/jsonreader.zep", 182);
 		return;
 	}
 	zephir_is_iterable(embeddedsByRel, &_1, &_0, 0, 0);
@@ -340,17 +337,17 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, transformEmbeddeds) {
 	) {
 		ZEPHIR_GET_HMKEY(rel, _1, _0);
 		ZEPHIR_GET_HVALUE(data, _2);
-		ZEPHIR_CALL_METHOD(&_3, this_ptr, "isassocarray", &_4, data);
+		ZEPHIR_CALL_METHOD(&_3, this_ptr, "isassocarray", NULL, data);
 		zephir_check_call_status();
 		if (zephir_is_true(_3)) {
-			ZEPHIR_CALL_METHOD(&embedded, this_ptr, "dotransformembedded", &_5, data);
+			ZEPHIR_CALL_METHOD(&embedded, this_ptr, "dotransformembedded", NULL, data);
 			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(NULL, resource, "addresource", &_6, rel, embedded);
+			ZEPHIR_CALL_METHOD(NULL, resource, "addresource", &_4, rel, embedded);
 			zephir_check_call_status();
 		} else {
-			ZEPHIR_CALL_METHOD(&embeddeds, this_ptr, "dotransformembeddeds", &_7, data);
+			ZEPHIR_CALL_METHOD(&embeddeds, this_ptr, "dotransformembeddeds", NULL, data);
 			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(NULL, resource, "addresources", &_8, rel, embeddeds);
+			ZEPHIR_CALL_METHOD(NULL, resource, "addresources", &_5, rel, embeddeds);
 			zephir_check_call_status();
 		}
 	}
@@ -366,7 +363,6 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, transformEmbeddeds) {
  */
 PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, doTransformEmbeddeds) {
 
-	zephir_fcall_cache_entry *_4 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
 	HashTable *_1;
 	HashPosition _0;
@@ -378,7 +374,7 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, doTransformEmbeddeds) {
 
 
 	if (Z_TYPE_P(data) != IS_ARRAY) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "data must be array", "phal/format/reader/Hal/jsonreader.zep", 207);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "data must be array", "phal/format/reader/hal/jsonreader.zep", 207);
 		return;
 	}
 	ZEPHIR_INIT_VAR(embeddeds);
@@ -389,7 +385,7 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, doTransformEmbeddeds) {
 	  ; zephir_hash_move_forward_ex(_1, &_0)
 	) {
 		ZEPHIR_GET_HVALUE(embedded, _2);
-		ZEPHIR_CALL_METHOD(&_3, this_ptr, "dotransformembedded", &_4, embedded);
+		ZEPHIR_CALL_METHOD(&_3, this_ptr, "dotransformembedded", NULL, embedded);
 		zephir_check_call_status();
 		zephir_array_append(&embeddeds, _3, PH_SEPARATE);
 	}
@@ -416,7 +412,7 @@ PHP_METHOD(Phal_Format_Reader_Hal_JsonReader, doTransformEmbedded) {
 
 
 	if (Z_TYPE_P(data) != IS_ARRAY) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "data must be array", "phal/format/reader/Hal/jsonreader.zep", 227);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "data must be array", "phal/format/reader/hal/jsonreader.zep", 227);
 		return;
 	}
 	ZEPHIR_INIT_VAR(resource);
