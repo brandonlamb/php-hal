@@ -547,7 +547,7 @@ PHP_METHOD(Phal_Entity, getLinks) {
 PHP_METHOD(Phal_Entity, addResource) {
 
 	zend_bool multi;
-	zval *rel_param = NULL, *entity, *multi_param = NULL, *_0, *_1;
+	zval *rel_param = NULL, *entity, *multi_param = NULL, *key = NULL, *_0;
 	zval *rel = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -583,15 +583,22 @@ PHP_METHOD(Phal_Entity, addResource) {
 	if (unlikely(!multi)) {
 		zephir_update_property_array(this_ptr, SL("entities"), rel, entity TSRMLS_CC);
 	} else {
+		ZEPHIR_OBS_VAR(key);
 		_0 = zephir_fetch_nproperty_this(this_ptr, SL("entities"), PH_NOISY_CC);
-		if (unlikely(!zephir_array_isset(_0, rel))) {
-			ZEPHIR_INIT_VAR(_1);
-			array_init(_1);
-			zephir_update_property_array(this_ptr, SL("entities"), rel, _1 TSRMLS_CC);
-			zephir_update_property_array_multi(this_ptr, SL("entities"), &entity TSRMLS_CC, SL("za"), 1, rel);
+		if (!(unlikely(zephir_array_isset_fetch(&key, _0, rel, 0 TSRMLS_CC)))) {
+			ZEPHIR_INIT_NVAR(key);
+			array_init_size(key, 2);
+			zephir_array_fast_append(key, entity);
 		} else {
-			zephir_update_property_array_multi(this_ptr, SL("entities"), &entity TSRMLS_CC, SL("za"), 1, rel);
+			if (unlikely(Z_TYPE_P(key) != IS_ARRAY)) {
+				ZEPHIR_INIT_NVAR(key);
+				array_init_size(key, 2);
+				zephir_array_fast_append(key, entity);
+			} else {
+				zephir_array_append(&key, entity, PH_SEPARATE);
+			}
 		}
+		zephir_update_property_array(this_ptr, SL("entities"), rel, key TSRMLS_CC);
 	}
 	RETURN_THIS();
 

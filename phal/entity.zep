@@ -222,17 +222,23 @@ class Entity
 
     public function addResource(string! rel, <\Phal\Entity> entity, boolean! multi = true) -> <\Phal\Entity>
     {
+        var key;
+
         if unlikely !multi {
             // Set single resource
             let this->entities[rel] = entity;
         } else {
             // Adding a resource to a collection, make sure rel is an array
-            if unlikely !isset this->entities[rel] {
-                let this->entities[rel] = [];
-                let this->entities[rel][] = entity;
+            if !unlikely fetch key, this->entities[rel] {
+                let key = [entity];
             } else {
-                let this->entities[rel][] = entity;
+                if unlikely typeof key != "array" {
+                    let key = [entity];
+                } else {
+                    let key[] = entity;
+                }
             }
+            let this->entities[rel] = key;
         }
 
         return this;
