@@ -209,7 +209,7 @@ class Resource implements ResourceInterface
             if (!isset($this->resources[$rel])) {
                 $this->resources[$rel] = [$resource];
             } elseif ($resource instanceof CollectionInterface) {
-                $this->resources[$rel][] = [];
+                $this->resources[$rel] = [];
             } else {
                 $this->resources[$rel][] = $resource;
             }
