@@ -8,7 +8,7 @@ use RuntimeException;
 use InvalidArgumentException;
 use DateTime;
 
-class Resource
+class Resource implements ResourceInterface
 {
     protected $id;
     protected $title;
@@ -107,7 +107,7 @@ class Resource
         return $this;
     }
 
-    public function linkResource($rel, Resource $resource)
+    public function linkResource($rel, ResourceInterface $resource)
     {
         $this->throwExceptionIfNotLinkableResouce($resource);
         $this->linkedResources[(string) $rel] = $resource;
@@ -123,7 +123,7 @@ class Resource
         return $this;
     }
 
-    protected function throwExceptionIfNotLinkableResouce(Resource $resource)
+    protected function throwExceptionIfNotLinkableResouce(ResourceInterface $resource)
     {
         $link = $resource->getSelfLink();
         if (!$link) {
@@ -199,7 +199,7 @@ class Resource
         return null;
     }
 
-    public function addResource($rel, Resource $resource, $multi = false)
+    public function addResource($rel, ResourceInterface $resource, $multi = false)
     {
         $rel = (string) $rel;
 
@@ -208,6 +208,8 @@ class Resource
         } else {
             if (!isset($this->resources[$rel])) {
                 $this->resources[$rel] = [$resource];
+#            } elseif ($resource instanceof CollectionInterface) {
+#                $this->resources[$rel][] = [];
             } else {
                 $this->resources[$rel][] = $resource;
             }
