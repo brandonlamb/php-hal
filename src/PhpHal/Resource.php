@@ -61,7 +61,7 @@ class Resource
         return $this;
     }
 
-    public function getURI()
+    public function getUri()
     {
         return (string) $this->uri;
     }
@@ -81,6 +81,11 @@ class Resource
     public function getData()
     {
         return $this->data;
+    }
+
+    public function addLink($rel, Link $link)
+    {
+        return $this->setLink($rel, $link);
     }
 
     public function setLink($rel, Link $link)
