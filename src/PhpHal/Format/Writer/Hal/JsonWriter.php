@@ -84,8 +84,14 @@ class JsonWriter extends AbstractJsonWriter
         }
     }
 
-    private function doTransformResources(&$data, &$embedded, $rel, Array $resources)
+    private function doTransformResources(&$data, &$embedded, $rel, array $resources)
     {
+        // Set embedded rel to an empty array to force sending rel: []
+        if (count($resources) === 0) {
+            $embedded[$rel] = [];
+            return;
+        }
+
         foreach ($resources as &$resource) {
             $this->doTransformResource($data, $embedded, $rel, $resource);
         }

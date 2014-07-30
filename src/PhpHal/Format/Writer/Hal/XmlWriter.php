@@ -127,6 +127,7 @@ class XmlWriter extends AbstractXmlWriter
             foreach ($resources as &$resource) {
                 $this->resourceToArray($writer, $resource, $rel);
             }
+
         }
     }
 }

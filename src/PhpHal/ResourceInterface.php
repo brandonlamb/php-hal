@@ -2,7 +2,4 @@
 
 namespace PhpHal;
 
-interface ResourceInterface
-{
-
-}
+interface ResourceInterface {}

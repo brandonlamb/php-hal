@@ -2,7 +2,4 @@
 
 namespace PhpHal;
 
-interface CollectionInterface extends ResourceInterface
-{
-
-}
+interface CollectionInterface extends ResourceInterface {}

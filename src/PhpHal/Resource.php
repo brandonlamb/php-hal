@@ -202,14 +202,13 @@ class Resource implements ResourceInterface
     public function addResource($rel, ResourceInterface $resource, $multi = false)
     {
         $rel = (string) $rel;
-
         if (!$multi) {
             $this->resources[$rel] = $resource;
         } else {
-            if (!isset($this->resources[$rel])) {
-                $this->resources[$rel] = [$resource];
-            } elseif ($resource instanceof CollectionInterface) {
+            if ($resource instanceof CollectionInterface) {
                 $this->resources[$rel] = [];
+            } elseif (!isset($this->resources[$rel])) {
+                $this->resources[$rel] = [$resource];
             } else {
                 $this->resources[$rel][] = $resource;
             }
