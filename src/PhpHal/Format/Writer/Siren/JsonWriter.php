@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpHal\Format\Writer\Hal;
+namespace PhpHal\Format\Writer\Siren;
 
 use PhpHal\Format\Writer\AbstractJsonWriter;
 use PhpHal\Resource;
